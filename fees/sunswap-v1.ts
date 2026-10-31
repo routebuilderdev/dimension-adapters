@@ -29,7 +29,9 @@ const adapterHistorical: Adapter = {
         if (!dayItem)
           throw new Error(`sunswap-v1: no fee data for ${startStr}`);
         dailyFees.addUSDValue(dayItem.fee, SWAP_FEES);
-        return { dailyFees };
+        const dailySupplySideRevenue = options.createBalances();
+        dailySupplySideRevenue.addUSDValue(dayItem.fee, SWAP_FEES_TO_LPS);
+        return { dailyFees, dailySupplySideRevenue, dailyRevenue: 0 };
       }) as any,
       start: '2024-01-06'
     },
